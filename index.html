@@ -152,6 +152,7 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
       </div>
       <div id="att-res"></div>
       <div class="hint" id="att-hint">이름을 검색하여 본인을 선택하세요</div>
+    <div class="hint" id="att-no-roster" style="display:none;color:#a32d2d;font-size:13px">⚠️ 명단이 등록되지 않았습니다.<br>관리자가 배포용 파일을 업로드해야 합니다.</div>
     </div>
     <div id="step-sign" style="display:none">
       <div class="step-hd">
@@ -363,7 +364,7 @@ var _ep = (Array.isArray(EMBEDDED_PEOPLE)) ? EMBEDDED_PEOPLE : [];
 var _ee = (EMBEDDED_EVENT && typeof EMBEDDED_EVENT === 'object') ? EMBEDDED_EVENT : {};
 var ST = {
   event: (_ee.name) ? _ee : {name:'',date:'',org:'',logo:''},
-  password: '##PW##',
+  password: '1234',
   people: _ep.map(function(p){ return Object.assign({},p,{sig:null,sigTime:null}); }),
   rf:'all', rs:''
 };
@@ -418,6 +419,8 @@ function renderAttHd(){
   $('att-title').textContent = e.name||'행사 참가자 등록부';
   $('att-org').textContent   = e.org||'';
   $('att-date').textContent  = e.date ? fmtDate(e.date) : '';
+  var noRoster=$('att-no-roster');
+  if(noRoster) noRoster.style.display = ST.people.length ? 'none' : 'block';
 }
 
 // ── 참석자 검색 ──
@@ -426,6 +429,9 @@ function attSearch(v){
   if(!q){ box.innerHTML=''; hint.style.display='block'; return; }
   hint.style.display='none';
   var hits=ST.people.filter(function(p){ return (p.name||'').indexOf(q)!==-1||(p.org||'').indexOf(q)!==-1; });
+  if(!ST.people.length){
+    box.innerHTML='<div style="text-align:center;padding:2rem;font-size:14px;color:#a32d2d">⚠️ 명단이 없습니다. 관리자가 배포용 파일을 GitHub에 업로드해야 합니다.</div>'; return;
+  }
   if(!hits.length){ box.innerHTML='<div style="text-align:center;padding:2rem;font-size:14px;color:var(--g400)">검색 결과가 없습니다</div>'; return; }
   var html='<div class="rlist">';
   hits.forEach(function(p){
@@ -639,7 +645,7 @@ function deployHTML(){
   // 플레이스홀더 치환
   src=src.replace("'##PEOPLE##'", JSON.stringify(cleanPeople));
   src=src.replace("'##EVENT##'",  JSON.stringify({name:ST.event.name,date:ST.event.date,org:ST.event.org,logo:''}));
-  src=src.replace("'##PW##'",  JSON.stringify(ST.password));
+  src=src.replace("'1234'",  JSON.stringify(ST.password));
 
   var blob=new Blob([src],{type:'text/html;charset=utf-8'});
   var a=document.createElement('a');
