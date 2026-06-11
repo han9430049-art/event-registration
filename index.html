@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
+<html lang="ko"><head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>행사 참가자 등록부</title>
@@ -138,26 +136,26 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
 <body>
 
 <!-- 참석자 화면 -->
-<div id="att" class="screen active">
+<div id="att" class="screen">
   <div id="att-inner">
     <div class="att-hd">
-      <div class="org" id="att-org"></div>
-      <h1 id="att-title">행사 참가자 등록부</h1>
-      <div class="dt" id="att-date"></div>
+      <div class="org" id="att-org">창의</div>
+      <h1 id="att-title">정책지원단</h1>
+      <div class="dt" id="att-date">2026년 6월 11일</div>
     </div>
-    <div id="step-search">
+    <div id="step-search" style="display: block;">
       <div class="sbox">
-        <svg class="ico" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <svg class="ico" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
         <input type="text" id="att-si" placeholder="이름을 입력하세요" autocomplete="off">
       </div>
       <div id="att-res"></div>
-      <div class="hint" id="att-hint">이름을 검색하여 본인을 선택하세요</div>
-    <div class="hint" id="att-no-roster" style="display:none;color:#a32d2d;font-size:13px">⚠️ 명단이 등록되지 않았습니다.<br>관리자가 배포용 파일을 업로드해야 합니다.</div>
+      <div class="hint" id="att-hint" style="display: block;">이름을 검색하여 본인을 선택하세요</div>
+    <div class="hint" id="att-no-roster" style="display: none; color: rgb(163, 45, 45); font-size: 13px;">⚠️ 명단이 등록되지 않았습니다.<br>관리자가 배포용 파일을 업로드해야 합니다.</div>
     </div>
     <div id="step-sign" style="display:none">
       <div class="step-hd">
         <button class="gh" id="btn-back" style="padding:6px 8px;margin-left:-8px">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"></path></svg>
         </button>
         <span style="font-size:15px;font-weight:600">전자서명</span>
       </div>
@@ -182,7 +180,7 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
     </div>
     <div style="text-align:center;margin-top:2.5rem">
       <button class="gh" id="btn-to-admin" style="font-size:12px;color:var(--g400)">
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         관리자
       </button>
     </div>
@@ -203,41 +201,41 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
 </div>
 
 <!-- 관리자 -->
-<div id="admin" class="screen">
+<div id="admin" class="screen active">
   <div class="atopbar">
     <div class="logo">
-      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 12h6M9 16h4"/></svg>
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"></path><rect x="9" y="3" width="6" height="4" rx="1"></rect><path d="M9 12h6M9 16h4"></path></svg>
       등록부 관리자
     </div>
     <div style="display:flex;align-items:center;gap:8px">
-      <span style="font-size:13px;color:var(--g400)" id="top-evname"></span>
+      <span style="font-size:13px;color:var(--g400)" id="top-evname">정책지원단</span>
       <button class="gh" id="btn-a-att" style="font-size:12px">참석자 화면</button>
       <button class="gh" id="btn-logout" style="font-size:12px">로그아웃</button>
     </div>
   </div>
   <div class="atabs">
-    <button class="atab on" data-tab="dash">대시보드</button>
+    <button class="atab" data-tab="dash">대시보드</button>
     <button class="atab" data-tab="roster">참석자 명단</button>
-    <button class="atab" data-tab="settings">행사 설정 &amp; 배포</button>
+    <button class="atab on" data-tab="settings">행사 설정 &amp; 배포</button>
   </div>
   <div class="abody">
     <div id="ptarget" style="display:none"></div>
 
     <!-- 대시보드 -->
-    <div id="tab-dash" class="tabp on">
+    <div id="tab-dash" class="tabp">
       <div class="sgrid">
-        <div class="scard hl"><div class="n" id="s-tot">0</div><div class="l">전체 참석자</div></div>
+        <div class="scard hl"><div class="n" id="s-tot">18</div><div class="l">전체 참석자</div></div>
         <div class="scard"><div class="n" id="s-sgn">0</div><div class="l">서명 완료</div></div>
-        <div class="scard"><div class="n" id="s-wai">0</div><div class="l">미서명</div></div>
+        <div class="scard"><div class="n" id="s-wai">18</div><div class="l">미서명</div></div>
         <div class="scard"><div class="n" id="s-pct">0%</div><div class="l">완료율</div></div>
       </div>
       <div class="qrcard">
-        <div id="qrcode"></div>
+        <div id="qrcode" title="https://han9430049-art.github.io/event-registration/"><canvas width="140" height="140" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
         <div class="qri">
           <h3>QR코드 사용 안내</h3>
           <p>참석자가 스마트폰으로 QR코드를 스캔하면 서명 화면으로 연결됩니다.<br>
           ⚠️ <strong>반드시 배포용 HTML을 GitHub에 업로드한 뒤</strong> QR을 출력하세요.</p>
-          <div class="qrurl" id="qrurl"></div>
+          <div class="qrurl" id="qrurl">https://han9430049-art.github.io/event-registration/</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button id="btn-pqr">QR 인쇄</button>
             <button id="btn-dqr">QR 저장</button>
@@ -255,7 +253,7 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
     <div id="tab-roster" class="tabp">
       <div class="toolbar">
         <div class="swrap">
-          <svg class="sico" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <svg class="sico" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
           <input type="text" id="rsearch" placeholder="이름, 소속 검색...">
         </div>
         <button class="fbtn on" data-rf="all">전체</button>
@@ -270,19 +268,19 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
             <th style="width:76px">직위</th><th style="width:80px">상태</th>
             <th style="width:100px">서명</th><th style="width:48px"></th>
           </tr></thead>
-          <tbody id="rtbody"></tbody>
+          <tbody id="rtbody"><tr><td style="color:var(--g400)">1</td><td>경산</td><td style="font-weight:600">한수용</td><td style="font-size:12px;color:var(--g600)">경산고등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="0">삭제</button></td></tr><tr><td style="color:var(--g400)">2</td><td>칠곡</td><td style="font-weight:600">이지훈</td><td style="font-size:12px;color:var(--g600)">왜관중학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="1">삭제</button></td></tr><tr><td style="color:var(--g400)">3</td><td>경주</td><td style="font-weight:600">서영대</td><td style="font-size:12px;color:var(--g600)">현곡초등학교</td><td>교사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="2">삭제</button></td></tr><tr><td style="color:var(--g400)">4</td><td>경산</td><td style="font-weight:600">김순임</td><td style="font-size:12px;color:var(--g600)">경산과학고등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="3">삭제</button></td></tr><tr><td style="color:var(--g400)">5</td><td>구미</td><td style="font-weight:600">김평식</td><td style="font-size:12px;color:var(--g600)">구미고등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="4">삭제</button></td></tr><tr><td style="color:var(--g400)">6</td><td>사곡</td><td style="font-weight:600">신미순</td><td style="font-size:12px;color:var(--g600)">사곡고등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="5">삭제</button></td></tr><tr><td style="color:var(--g400)">7</td><td>포항</td><td style="font-weight:600">이하늬</td><td style="font-size:12px;color:var(--g600)">장량초등학교</td><td>교사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="6">삭제</button></td></tr><tr><td style="color:var(--g400)">8</td><td>포항</td><td style="font-weight:600">김형식</td><td style="font-size:12px;color:var(--g600)">경북과학고등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="7">삭제</button></td></tr><tr><td style="color:var(--g400)">9</td><td>경산</td><td style="font-weight:600">박준일</td><td style="font-size:12px;color:var(--g600)">사동고등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="8">삭제</button></td></tr><tr><td style="color:var(--g400)">10</td><td>포항</td><td style="font-weight:600">김한석</td><td style="font-size:12px;color:var(--g600)">포항펜타초등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="9">삭제</button></td></tr><tr><td style="color:var(--g400)">11</td><td>포항</td><td style="font-weight:600">권용인</td><td style="font-size:12px;color:var(--g600)">장성초등학교</td><td>교감</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="10">삭제</button></td></tr><tr><td style="color:var(--g400)">12</td><td>안동</td><td style="font-weight:600">김홍찬</td><td style="font-size:12px;color:var(--g600)">경북일고등학교</td><td>교사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="11">삭제</button></td></tr><tr><td style="color:var(--g400)">13</td><td>안동</td><td style="font-weight:600">박경애</td><td style="font-size:12px;color:var(--g600)">창의인재과</td><td>장학관</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="12">삭제</button></td></tr><tr><td style="color:var(--g400)">14</td><td>안동</td><td style="font-weight:600">한선영</td><td style="font-size:12px;color:var(--g600)">창의인재과</td><td>장학사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="13">삭제</button></td></tr><tr><td style="color:var(--g400)">15</td><td>안동</td><td style="font-weight:600">이정숙</td><td style="font-size:12px;color:var(--g600)">창의인재과</td><td>장학사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="14">삭제</button></td></tr><tr><td style="color:var(--g400)">16</td><td>안동</td><td style="font-weight:600">정재환</td><td style="font-size:12px;color:var(--g600)">창의인재과</td><td>장학사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="15">삭제</button></td></tr><tr><td style="color:var(--g400)">17</td><td>안동</td><td style="font-weight:600">김현호</td><td style="font-size:12px;color:var(--g600)">창의인재과</td><td>장학사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="16">삭제</button></td></tr><tr><td style="color:var(--g400)">18</td><td>안동</td><td style="font-weight:600">손문규</td><td style="font-size:12px;color:var(--g600)">창의인재과</td><td>장학사</td><td><span class="badge wait">미서명</span></td><td>—</td><td><button class="dbtn" data-del="17">삭제</button></td></tr></tbody>
         </table>
       </div>
     </div>
 
     <!-- 설정 & 배포 -->
-    <div id="tab-settings" class="tabp">
+    <div id="tab-settings" class="tabp on">
       <div class="sgrid2">
 
         <!-- 배포 안내 -->
         <div class="deploy-box">
           <h3>
-            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v4M12 16h.01"></path></svg>
             행사 준비 순서
           </h3>
           <ol>
@@ -293,7 +291,7 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
             <li>대시보드에서 <strong>QR코드를 인쇄</strong>해 행사장에 비치하세요</li>
           </ol>
           <button class="pri" id="btn-deploy" style="font-size:14px;padding:10px 20px">
-            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
             배포용 HTML 다운로드
           </button>
           <p style="font-size:12px;color:var(--g400);margin-top:10px">※ 명단이 파일에 내장되어 핸드폰에서도 바로 검색됩니다</p>
@@ -320,10 +318,10 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
         <div class="card">
           <h3 style="font-size:15px;font-weight:700;margin-bottom:6px">엑셀로 명단 불러오기</h3>
           <p style="font-size:13px;color:var(--g400);margin-bottom:1rem">열 순서: <strong>연번 · 지역 · 이름 · 소속 · 직위</strong> (1행 헤더 자동 인식)</p>
-          <div class="uarea" id="uarea">
-            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:var(--g400);margin:0 auto"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          <div class="uarea" id="uarea" style="border-color: var(--green);">
+            <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" style="color:var(--g400);margin:0 auto"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
             <p>클릭하여 .xlsx 파일 선택</p>
-            <p style="font-size:11px;color:var(--g400);margin-top:4px" id="ufname">파일을 선택하면 명단이 교체됩니다</p>
+            <p style="font-size:11px;color:var(--g400);margin-top:4px" id="ufname">✓ 18명 불러오기 완료</p>
           </div>
           <input type="file" id="xlsin" accept=".xlsx,.xls" style="display:none">
         </div>
@@ -341,7 +339,7 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
                 <th style="width:80px">이름 *</th><th>소속</th>
                 <th style="width:80px">직위</th><th style="width:36px"></th>
               </tr></thead>
-              <tbody id="mtbody"></tbody>
+              <tbody id="mtbody"><tr><td><input type="number" class="m-no" value="" placeholder="1" style="width:46px"></td><td><input type="text" class="m-reg" value="" placeholder="지역"></td><td><input type="text" class="m-name" value="" placeholder="이름 *"></td><td><input type="text" class="m-org" value="" placeholder="소속기관"></td><td><input type="text" class="m-pos" value="" placeholder="직위"></td><td><button class="dbtn" data-mrow="0">✕</button></td></tr></tbody>
             </table>
           </div>
           <div style="display:flex;gap:8px;margin-top:12px">
@@ -362,14 +360,14 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
 'use strict';
 
 // ── 내장 명단 (배포용 HTML 생성 시 여기에 데이터가 삽입됨) ──
-var EMBEDDED_PEOPLE = '##PEOPLE##';
-var EMBEDDED_EVENT  = '##EVENT##';
+var EMBEDDED_PEOPLE = [{"no":1,"region":"경산","name":"한수용","org":"경산고등학교","pos":"교감","sig":null,"sigTime":null},{"no":2,"region":"칠곡","name":"이지훈","org":"왜관중학교","pos":"교감","sig":null,"sigTime":null},{"no":3,"region":"경주","name":"서영대","org":"현곡초등학교","pos":"교사","sig":null,"sigTime":null},{"no":4,"region":"경산","name":"김순임","org":"경산과학고등학교","pos":"교감","sig":null,"sigTime":null},{"no":5,"region":"구미","name":"김평식","org":"구미고등학교","pos":"교감","sig":null,"sigTime":null},{"no":6,"region":"사곡","name":"신미순","org":"사곡고등학교","pos":"교감","sig":null,"sigTime":null},{"no":7,"region":"포항","name":"이하늬","org":"장량초등학교","pos":"교사","sig":null,"sigTime":null},{"no":8,"region":"포항","name":"김형식","org":"경북과학고등학교","pos":"교감","sig":null,"sigTime":null},{"no":9,"region":"경산","name":"박준일","org":"사동고등학교","pos":"교감","sig":null,"sigTime":null},{"no":10,"region":"포항","name":"김한석","org":"포항펜타초등학교","pos":"교감","sig":null,"sigTime":null},{"no":11,"region":"포항","name":"권용인","org":"장성초등학교","pos":"교감","sig":null,"sigTime":null},{"no":12,"region":"안동","name":"김홍찬","org":"경북일고등학교","pos":"교사","sig":null,"sigTime":null},{"no":13,"region":"안동","name":"박경애","org":"창의인재과","pos":"장학관","sig":null,"sigTime":null},{"no":14,"region":"안동","name":"한선영","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":15,"region":"안동","name":"이정숙","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":16,"region":"안동","name":"정재환","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":17,"region":"안동","name":"김현호","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":18,"region":"안동","name":"손문규","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null}];
+var EMBEDDED_EVENT  = {"name":"정책지원단","date":"2026-06-11","org":"창의","logo":"","url":""};
 
 var _ep = (Array.isArray(EMBEDDED_PEOPLE)) ? EMBEDDED_PEOPLE : [];
 var _ee = (EMBEDDED_EVENT && typeof EMBEDDED_EVENT === 'object') ? EMBEDDED_EVENT : {};
 var ST = {
   event: (_ee.name) ? _ee : {name:'',date:'',org:'',logo:''},
-  password: '1234',
+  password: "1234",
   people: _ep.map(function(p){ return Object.assign({},p,{sig:null,sigTime:null}); }),
   rf:'all', rs:''
 };
@@ -649,17 +647,13 @@ function deployHTML(){
   // 서명 제거한 명단 (배포용 - 서명은 행사당일 입력)
   var cleanPeople=ST.people.map(function(p){return{no:p.no,region:p.region,name:p.name,org:p.org,pos:p.pos,sig:null,sigTime:null};});
 
-  // 현재 HTML 소스에 데이터 삽입 (참석자 화면을 기본으로 강제 설정)
+  // 현재 HTML 소스에 데이터 삽입
   var src=document.documentElement.outerHTML;
-  // 모든 screen에서 active 클래스 제거 후 att만 active로 설정
-  src=src.replace(/id="att" class="screen[^"]*"/g, 'id="att" class="screen active"');
-  src=src.replace(/id="login" class="screen[^"]*"/g, 'id="login" class="screen"');
-  src=src.replace(/id="admin" class="screen[^"]*"/g, 'id="admin" class="screen"');
 
   // 플레이스홀더 치환
-  src=src.replace("'##PEOPLE##'", JSON.stringify(cleanPeople));
-  src=src.replace("'##EVENT##'",  JSON.stringify({name:ST.event.name,date:ST.event.date,org:ST.event.org,logo:'',url:ST.event.url||''}));
-  src=src.replace("'1234'",  JSON.stringify(ST.password));
+  src=src.replace("[{"no":1,"region":"경산","name":"한수용","org":"경산고등학교","pos":"교감","sig":null,"sigTime":null},{"no":2,"region":"칠곡","name":"이지훈","org":"왜관중학교","pos":"교감","sig":null,"sigTime":null},{"no":3,"region":"경주","name":"서영대","org":"현곡초등학교","pos":"교사","sig":null,"sigTime":null},{"no":4,"region":"경산","name":"김순임","org":"경산과학고등학교","pos":"교감","sig":null,"sigTime":null},{"no":5,"region":"구미","name":"김평식","org":"구미고등학교","pos":"교감","sig":null,"sigTime":null},{"no":6,"region":"사곡","name":"신미순","org":"사곡고등학교","pos":"교감","sig":null,"sigTime":null},{"no":7,"region":"포항","name":"이하늬","org":"장량초등학교","pos":"교사","sig":null,"sigTime":null},{"no":8,"region":"포항","name":"김형식","org":"경북과학고등학교","pos":"교감","sig":null,"sigTime":null},{"no":9,"region":"경산","name":"박준일","org":"사동고등학교","pos":"교감","sig":null,"sigTime":null},{"no":10,"region":"포항","name":"김한석","org":"포항펜타초등학교","pos":"교감","sig":null,"sigTime":null},{"no":11,"region":"포항","name":"권용인","org":"장성초등학교","pos":"교감","sig":null,"sigTime":null},{"no":12,"region":"안동","name":"김홍찬","org":"경북일고등학교","pos":"교사","sig":null,"sigTime":null},{"no":13,"region":"안동","name":"박경애","org":"창의인재과","pos":"장학관","sig":null,"sigTime":null},{"no":14,"region":"안동","name":"한선영","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":15,"region":"안동","name":"이정숙","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":16,"region":"안동","name":"정재환","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":17,"region":"안동","name":"김현호","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null},{"no":18,"region":"안동","name":"손문규","org":"창의인재과","pos":"장학사","sig":null,"sigTime":null}]", JSON.stringify(cleanPeople));
+  src=src.replace("{"name":"정책지원단","date":"2026-06-11","org":"창의","logo":"","url":""}",  JSON.stringify({name:ST.event.name,date:ST.event.date,org:ST.event.org,logo:'',url:ST.event.url||''}));
+  src=src.replace(""1234"",  JSON.stringify(ST.password));
 
   var blob=new Blob([src],{type:'text/html;charset=utf-8'});
   var a=document.createElement('a');
@@ -734,5 +728,6 @@ document.addEventListener('DOMContentLoaded', function(){
 
 })();
 </script>
-</body>
-</html>
+
+
+</body></html>
