@@ -27,7 +27,6 @@ input:focus{border-color:var(--blue)}
 .badge{display:inline-block;font-size:11px;padding:2px 9px;border-radius:20px;font-weight:600}
 .badge.done{background:var(--green-lt);color:var(--green)}
 .badge.wait{background:var(--g100);color:var(--g600)}
-/* 화면 전환 */
 .screen{display:none}
 .screen.active{display:block}
 #login.active{display:flex;min-height:100vh;align-items:center;justify-content:center;padding:2rem}
@@ -37,7 +36,6 @@ input:focus{border-color:var(--blue)}
 .att-hd .org{font-size:12px;color:var(--g400);margin-bottom:8px}
 .att-hd h1{font-size:22px;font-weight:700;line-height:1.3}
 .att-hd .dt{font-size:13px;color:var(--g400);margin-top:6px}
-.att-hd img.logo{max-height:48px;margin:0 auto 12px;display:block}
 .sbox{position:relative;margin-bottom:.75rem}
 .sbox input{padding-left:44px;font-size:16px;border-radius:var(--r);padding-top:13px;padding-bottom:13px;border:1.5px solid var(--border)}
 .sbox input:focus{border-color:var(--blue)}
@@ -72,8 +70,8 @@ input:focus{border-color:var(--blue)}
 /* 관리자 */
 .atopbar{background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--sh)}
 .atopbar .logo{font-size:15px;font-weight:700;color:var(--blue);display:flex;align-items:center;gap:8px}
-.atabs{display:flex;background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;position:sticky;top:56px;z-index:40}
-.atab{padding:14px 18px;font-size:13px;font-weight:600;color:var(--g400);border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;transition:color .15s,border-color .15s}
+.atabs{display:flex;background:#fff;border-bottom:1px solid var(--border);padding:0 1.5rem;position:sticky;top:56px;z-index:40;overflow-x:auto}
+.atab{padding:14px 16px;font-size:13px;font-weight:600;color:var(--g400);border:none;background:none;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .15s,border-color .15s}
 .atab.on{color:var(--blue);border-bottom-color:var(--blue)}
 .atab:hover:not(.on){color:var(--g900)}
 .abody{padding:1.5rem;max-width:1000px;margin:0 auto}
@@ -120,6 +118,11 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
 .mtable td{padding:4px;border:1px solid var(--g100)}
 .mtable td input{border:none;padding:6px 8px;font-size:13px;background:transparent;width:100%}
 .mtable td input:focus{background:var(--blue-lt);outline:none;border-radius:3px}
+/* 배포 안내 박스 */
+.deploy-box{background:linear-gradient(135deg,#e8f0fb 0%,#f0f7e8 100%);border:1.5px solid var(--blue);border-radius:var(--r);padding:1.5rem;margin-bottom:1.25rem}
+.deploy-box h3{font-size:15px;font-weight:700;color:var(--blue);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.deploy-box ol{font-size:13px;color:var(--g600);line-height:1.8;padding-left:1.2rem;margin-bottom:12px}
+.deploy-box ol li strong{color:var(--g900)}
 @media print{
   #login,#att,.atopbar,.atabs,.abody>*:not(#ptarget){display:none!important}
   #ptarget{display:block!important}
@@ -134,11 +137,10 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
 </head>
 <body>
 
-<!-- 참석자 -->
+<!-- 참석자 화면 -->
 <div id="att" class="screen active">
   <div id="att-inner">
     <div class="att-hd">
-      <img id="att-logo" class="logo" src="" alt="" style="display:none">
       <div class="org" id="att-org"></div>
       <h1 id="att-title">행사 참가자 등록부</h1>
       <div class="dt" id="att-date"></div>
@@ -215,10 +217,11 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
   <div class="atabs">
     <button class="atab on" data-tab="dash">대시보드</button>
     <button class="atab" data-tab="roster">참석자 명단</button>
-    <button class="atab" data-tab="settings">행사 설정</button>
+    <button class="atab" data-tab="settings">행사 설정 &amp; 배포</button>
   </div>
   <div class="abody">
     <div id="ptarget" style="display:none"></div>
+
     <!-- 대시보드 -->
     <div id="tab-dash" class="tabp on">
       <div class="sgrid">
@@ -231,7 +234,8 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
         <div id="qrcode"></div>
         <div class="qri">
           <h3>QR코드 사용 안내</h3>
-          <p>참석자가 스마트폰으로 QR코드를 스캔하면 서명 화면으로 연결됩니다. 이름을 검색해 본인을 선택하고 서명을 완료합니다.</p>
+          <p>참석자가 스마트폰으로 QR코드를 스캔하면 서명 화면으로 연결됩니다.<br>
+          ⚠️ <strong>반드시 배포용 HTML을 GitHub에 업로드한 뒤</strong> QR을 출력하세요.</p>
           <div class="qrurl" id="qrurl"></div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <button id="btn-pqr">QR 인쇄</button>
@@ -245,6 +249,7 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
         <button class="dan" id="btn-rst">서명 전체 초기화</button>
       </div>
     </div>
+
     <!-- 명단 -->
     <div id="tab-roster" class="tabp">
       <div class="toolbar">
@@ -268,9 +273,32 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
         </table>
       </div>
     </div>
-    <!-- 설정 -->
+
+    <!-- 설정 & 배포 -->
     <div id="tab-settings" class="tabp">
       <div class="sgrid2">
+
+        <!-- 배포 안내 -->
+        <div class="deploy-box">
+          <h3>
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg>
+            행사 준비 순서
+          </h3>
+          <ol>
+            <li><strong>행사 기본 정보</strong>를 입력하고 저장하세요</li>
+            <li><strong>참석자 명단</strong>을 엑셀 업로드 또는 직접 입력으로 등록하세요</li>
+            <li><strong>"배포용 HTML 다운로드"</strong> 버튼으로 파일을 저장하세요</li>
+            <li>GitHub 저장소에 <strong>index.html</strong>로 업로드하세요</li>
+            <li>대시보드에서 <strong>QR코드를 인쇄</strong>해 행사장에 비치하세요</li>
+          </ol>
+          <button class="pri" id="btn-deploy" style="font-size:14px;padding:10px 20px">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            배포용 HTML 다운로드
+          </button>
+          <p style="font-size:12px;color:var(--g400);margin-top:10px">※ 명단이 파일에 내장되어 핸드폰에서도 바로 검색됩니다</p>
+        </div>
+
+        <!-- 행사 정보 -->
         <div class="card">
           <h3 style="font-size:15px;font-weight:700;margin-bottom:1rem">행사 기본 정보</h3>
           <div class="frow" style="margin-bottom:12px">
@@ -281,6 +309,8 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
           <div class="fg" style="margin-bottom:16px"><label>관리자 비밀번호 변경</label><input type="password" id="s-pw" placeholder="새 비밀번호 (빈칸 = 변경 안함)"></div>
           <button class="pri" id="btn-ssave">설정 저장</button>
         </div>
+
+        <!-- 엑셀 업로드 -->
         <div class="card">
           <h3 style="font-size:15px;font-weight:700;margin-bottom:6px">엑셀로 명단 불러오기</h3>
           <p style="font-size:13px;color:var(--g400);margin-bottom:1rem">열 순서: <strong>연번 · 지역 · 이름 · 소속 · 직위</strong> (1행 헤더 자동 인식)</p>
@@ -291,6 +321,8 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
           </div>
           <input type="file" id="xlsin" accept=".xlsx,.xls" style="display:none">
         </div>
+
+        <!-- 직접 입력 -->
         <div class="card">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">
             <h3 style="font-size:15px;font-weight:700">참석자 직접 추가</h3>
@@ -311,6 +343,7 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
             <button id="btn-mclr">초기화</button>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -322,49 +355,78 @@ tbody td{font-size:13px;padding:10px 12px;vertical-align:middle}
 (function(){
 'use strict';
 
-var ST={event:{name:'',date:'',org:'',logo:''},password:'1234',people:[],rf:'all',rs:''};
-var attTarget=null,drawing=false,lx=0,ly=0,mrows=[];
+// ── 내장 명단 (배포용 HTML 생성 시 여기에 데이터가 삽입됨) ──
+var EMBEDDED_PEOPLE = '##PEOPLE##';
+var EMBEDDED_EVENT  = '##EVENT##';
 
-function save(){
-  var sigs=ST.people.map(function(p){return p.sig;});
-  var sts=ST.people.map(function(p){return p.sigTime;});
-  var slim=JSON.parse(JSON.stringify(ST));
-  slim.people.forEach(function(p){p.sig=null;p.sigTime=null;});
-  try{localStorage.setItem('reg4_s',JSON.stringify(slim));localStorage.setItem('reg4_sg',JSON.stringify(sigs));localStorage.setItem('reg4_st',JSON.stringify(sts));}catch(e){}
-}
-function load(){
+var _ep = (Array.isArray(EMBEDDED_PEOPLE)) ? EMBEDDED_PEOPLE : [];
+var _ee = (EMBEDDED_EVENT && typeof EMBEDDED_EVENT === 'object') ? EMBEDDED_EVENT : {};
+var ST = {
+  event: (_ee.name) ? _ee : {name:'',date:'',org:'',logo:''},
+  password: '##PW##',
+  people: _ep.map(function(p){ return Object.assign({},p,{sig:null,sigTime:null}); }),
+  rf:'all', rs:''
+};
+
+// localStorage에서 서명 데이터만 복원 (명단은 내장 데이터 사용)
+function loadSigs(){
   try{
-    var s=localStorage.getItem('reg4_s'),sg=localStorage.getItem('reg4_sg'),st=localStorage.getItem('reg4_st');
-    if(s){ST=JSON.parse(s);var sigs=sg?JSON.parse(sg):[];var sts2=st?JSON.parse(st):[];ST.people.forEach(function(p,i){p.sig=sigs[i]||null;p.sigTime=sts2[i]||null;});}
+    var sg=localStorage.getItem('reg5_sg_'+ST.people.length);
+    var st=localStorage.getItem('reg5_st_'+ST.people.length);
+    if(sg){
+      var sigs=JSON.parse(sg), sts=st?JSON.parse(st):[];
+      ST.people.forEach(function(p,i){ p.sig=sigs[i]||null; p.sigTime=sts[i]||null; });
+    }
   }catch(e){}
 }
-function fmtDate(d){if(!d)return'';var p=d.split('-');return p[0]+'년 '+parseInt(p[1])+'월 '+parseInt(p[2])+'일';}
-function $(id){return document.getElementById(id);}
+function saveSigs(){
+  try{
+    var key='reg5_sg_'+ST.people.length;
+    localStorage.setItem(key, JSON.stringify(ST.people.map(function(p){return p.sig;})));
+    localStorage.setItem('reg5_st_'+ST.people.length, JSON.stringify(ST.people.map(function(p){return p.sigTime;})));
+  }catch(e){}
+}
+// 관리자 설정(행사명·비번)은 별도 저장
+function saveAdminSettings(){
+  try{ localStorage.setItem('reg5_admin', JSON.stringify({event:ST.event, password:ST.password})); }catch(e){}
+}
+function loadAdminSettings(){
+  try{
+    var s=localStorage.getItem('reg5_admin');
+    if(s){ var d=JSON.parse(s); ST.event=d.event||ST.event; ST.password=d.password||ST.password; }
+  }catch(e){}
+}
 
-function show(id){document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});$(id).classList.add('active');}
-function goAtt(){show('att');renderAttHd();attBack();}
-function goLogin(){show('login');$('lerr').textContent='';$('pw-input').value='';}
+function fmtDate(d){ if(!d)return''; var p=d.split('-'); return p[0]+'년 '+parseInt(p[1])+'월 '+parseInt(p[2])+'일'; }
+function $(id){ return document.getElementById(id); }
+
+// ── 화면 전환 ──
+function show(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.remove('active'); });
+  $(id).classList.add('active');
+}
+function goAtt(){ show('att'); renderAttHd(); attBack(); }
+function goLogin(){ show('login'); $('lerr').textContent=''; $('pw-input').value=''; }
 function doLogin(){
   var v=$('pw-input').value;
-  if(v===ST.password){show('admin');renderAdmin();}
-  else{$('lerr').textContent='비밀번호가 올바르지 않습니다.';}
+  if(v===ST.password){ show('admin'); renderAdmin(); }
+  else{ $('lerr').textContent='비밀번호가 올바르지 않습니다.'; }
 }
 
 function renderAttHd(){
   var e=ST.event;
-  $('att-title').textContent=e.name||'행사 참가자 등록부';
-  $('att-org').textContent=e.org||'';
-  $('att-date').textContent=e.date?fmtDate(e.date):'';
-  var li=$('att-logo');
-  if(e.logo){li.src=e.logo;li.style.display='block';}else li.style.display='none';
+  $('att-title').textContent = e.name||'행사 참가자 등록부';
+  $('att-org').textContent   = e.org||'';
+  $('att-date').textContent  = e.date ? fmtDate(e.date) : '';
 }
 
+// ── 참석자 검색 ──
 function attSearch(v){
-  var q=v.trim(),hint=$('att-hint'),box=$('att-res');
-  if(!q){box.innerHTML='';hint.style.display='block';return;}
+  var q=v.trim(), hint=$('att-hint'), box=$('att-res');
+  if(!q){ box.innerHTML=''; hint.style.display='block'; return; }
   hint.style.display='none';
-  var hits=ST.people.filter(function(p){return (p.name||'').indexOf(q)!==-1||(p.org||'').indexOf(q)!==-1;});
-  if(!hits.length){box.innerHTML='<div style="text-align:center;padding:2rem;font-size:14px;color:var(--g400)">검색 결과가 없습니다</div>';return;}
+  var hits=ST.people.filter(function(p){ return (p.name||'').indexOf(q)!==-1||(p.org||'').indexOf(q)!==-1; });
+  if(!hits.length){ box.innerHTML='<div style="text-align:center;padding:2rem;font-size:14px;color:var(--g400)">검색 결과가 없습니다</div>'; return; }
   var html='<div class="rlist">';
   hits.forEach(function(p){
     html+='<div class="ritem'+(p.sig?' signed':'')+'" data-idx="'+(p.no-1)+'">'
@@ -376,72 +438,82 @@ function attSearch(v){
   html+='</div>';
   box.innerHTML=html;
   box.querySelectorAll('.ritem:not(.signed)').forEach(function(el){
-    el.addEventListener('click',function(){selectPerson(parseInt(el.getAttribute('data-idx')));});
+    el.addEventListener('click', function(){ selectPerson(parseInt(el.getAttribute('data-idx'))); });
   });
 }
 
 function selectPerson(idx){
-  attTarget=idx;var p=ST.people[idx];
-  $('sign-name').textContent=p.name+(p.pos?' '+p.pos:'');
-  $('sign-sub').textContent=[p.org,p.region].filter(Boolean).join(' · ');
-  $('step-search').style.display='none';$('step-sign').style.display='block';$('step-done').style.display='none';
+  var p=ST.people[idx]; if(!p)return;
+  window._attTarget=idx;
+  $('sign-name').textContent = p.name+(p.pos?' '+p.pos:'');
+  $('sign-sub').textContent  = [p.org,p.region].filter(Boolean).join(' · ');
+  $('step-search').style.display='none';
+  $('step-sign').style.display='block';
+  $('step-done').style.display='none';
   clearSig();
 }
 function attBack(){
-  attTarget=null;
-  $('step-search').style.display='block';$('step-sign').style.display='none';$('step-done').style.display='none';
-  $('att-si').value='';$('att-res').innerHTML='';$('att-hint').style.display='block';
+  window._attTarget=null;
+  $('step-search').style.display='block';
+  $('step-sign').style.display='none';
+  $('step-done').style.display='none';
+  $('att-si').value='';
+  $('att-res').innerHTML='';
+  $('att-hint').style.display='block';
 }
 
-var sc=$('sigc'),sctx=sc.getContext('2d');
-function getPos(e){var r=sc.getBoundingClientRect(),sx=sc.width/r.width,sy=sc.height/r.height;if(e.touches)return{x:(e.touches[0].clientX-r.left)*sx,y:(e.touches[0].clientY-r.top)*sy};return{x:(e.clientX-r.left)*sx,y:(e.clientY-r.top)*sy};}
-sc.addEventListener('mousedown',function(e){drawing=true;var p=getPos(e);lx=p.x;ly=p.y;$('sph').style.display='none';});
-sc.addEventListener('mousemove',function(e){if(!drawing)return;var p=getPos(e);sctx.beginPath();sctx.moveTo(lx,ly);sctx.lineTo(p.x,p.y);sctx.strokeStyle='#111';sctx.lineWidth=2.5;sctx.lineCap='round';sctx.stroke();lx=p.x;ly=p.y;});
-sc.addEventListener('mouseup',function(){drawing=false;});
-sc.addEventListener('mouseleave',function(){drawing=false;});
-sc.addEventListener('touchstart',function(e){e.preventDefault();drawing=true;var p=getPos(e);lx=p.x;ly=p.y;$('sph').style.display='none';},{passive:false});
-sc.addEventListener('touchmove',function(e){e.preventDefault();if(!drawing)return;var p=getPos(e);sctx.beginPath();sctx.moveTo(lx,ly);sctx.lineTo(p.x,p.y);sctx.strokeStyle='#111';sctx.lineWidth=2.5;sctx.lineCap='round';sctx.stroke();lx=p.x;ly=p.y;},{passive:false});
-sc.addEventListener('touchend',function(){drawing=false;});
-
-function clearSig(){sctx.clearRect(0,0,sc.width,sc.height);$('sph').style.display='flex';}
+// ── 서명 캔버스 ──
+var sc=null, sctx=null, drawing=false, lx=0, ly=0;
+function initCanvas(){
+  sc=$('sigc'); sctx=sc.getContext('2d');
+  function getPos(e){ var r=sc.getBoundingClientRect(),sx=sc.width/r.width,sy=sc.height/r.height; if(e.touches)return{x:(e.touches[0].clientX-r.left)*sx,y:(e.touches[0].clientY-r.top)*sy}; return{x:(e.clientX-r.left)*sx,y:(e.clientY-r.top)*sy}; }
+  sc.addEventListener('mousedown',  function(e){ drawing=true; var p=getPos(e); lx=p.x; ly=p.y; $('sph').style.display='none'; });
+  sc.addEventListener('mousemove',  function(e){ if(!drawing)return; var p=getPos(e); sctx.beginPath(); sctx.moveTo(lx,ly); sctx.lineTo(p.x,p.y); sctx.strokeStyle='#111'; sctx.lineWidth=2.5; sctx.lineCap='round'; sctx.stroke(); lx=p.x; ly=p.y; });
+  sc.addEventListener('mouseup',    function(){ drawing=false; });
+  sc.addEventListener('mouseleave', function(){ drawing=false; });
+  sc.addEventListener('touchstart', function(e){ e.preventDefault(); drawing=true; var p=getPos(e); lx=p.x; ly=p.y; $('sph').style.display='none'; },{passive:false});
+  sc.addEventListener('touchmove',  function(e){ e.preventDefault(); if(!drawing)return; var p=getPos(e); sctx.beginPath(); sctx.moveTo(lx,ly); sctx.lineTo(p.x,p.y); sctx.strokeStyle='#111'; sctx.lineWidth=2.5; sctx.lineCap='round'; sctx.stroke(); lx=p.x; ly=p.y; },{passive:false});
+  sc.addEventListener('touchend',   function(){ drawing=false; });
+}
+function clearSig(){ if(sctx)sctx.clearRect(0,0,sc.width,sc.height); $('sph').style.display='flex'; }
 function saveSig(){
-  if(attTarget===null)return;
-  var d=sctx.getImageData(0,0,sc.width,sc.height).data,hasInk=false;
-  for(var i=0;i<d.length;i++){if(d[i]!==0){hasInk=true;break;}}
-  if(!hasInk){alert('서명을 입력해 주세요.');return;}
-  var p=ST.people[attTarget];
-  p.sig=sc.toDataURL('image/png');p.sigTime=new Date().toLocaleString('ko-KR');
-  save();
-  $('done-t').textContent=p.name+'님, 서명 완료!';
-  $('done-s').textContent=(p.org||'')+(p.pos?' · '+p.pos:'');
-  $('step-sign').style.display='none';$('step-done').style.display='block';
+  var idx=window._attTarget; if(idx==null)return;
+  var d=sctx.getImageData(0,0,sc.width,sc.height).data, hasInk=false;
+  for(var i=0;i<d.length;i++){ if(d[i]!==0){hasInk=true;break;} }
+  if(!hasInk){ alert('서명을 입력해 주세요.'); return; }
+  var p=ST.people[idx];
+  p.sig=sc.toDataURL('image/png'); p.sigTime=new Date().toLocaleString('ko-KR');
+  saveSigs();
+  $('done-t').textContent = p.name+'님, 서명 완료!';
+  $('done-s').textContent = (p.org||'')+(p.pos?' · '+p.pos:'');
+  $('step-sign').style.display='none';
+  $('step-done').style.display='block';
 }
 
+// ── 관리자 ──
 function aTab(id){
-  document.querySelectorAll('.tabp').forEach(function(p){p.classList.remove('on');});
-  document.querySelectorAll('.atab').forEach(function(b){b.classList.remove('on');});
+  document.querySelectorAll('.tabp').forEach(function(p){ p.classList.remove('on'); });
+  document.querySelectorAll('.atab').forEach(function(b){ b.classList.remove('on'); });
   $('tab-'+id).classList.add('on');
   document.querySelector('[data-tab="'+id+'"]').classList.add('on');
-  if(id==='settings')renderSettings();
+  if(id==='settings') renderSettings();
 }
-
-function renderAdmin(){updateStats();renderQR();renderRoster();$('top-evname').textContent=ST.event.name||'';}
+function renderAdmin(){ updateStats(); renderQR(); renderRoster(); $('top-evname').textContent=ST.event.name||''; }
 function updateStats(){
-  var tot=ST.people.length,sgn=ST.people.filter(function(p){return p.sig;}).length;
-  $('s-tot').textContent=tot;$('s-sgn').textContent=sgn;$('s-wai').textContent=tot-sgn;
-  $('s-pct').textContent=tot?Math.round(sgn/tot*100)+'%':'0%';
+  var tot=ST.people.length, sgn=ST.people.filter(function(p){return p.sig;}).length;
+  $('s-tot').textContent=tot; $('s-sgn').textContent=sgn;
+  $('s-wai').textContent=tot-sgn; $('s-pct').textContent=tot?Math.round(sgn/tot*100)+'%':'0%';
 }
-
 function renderQR(){
   var url=window.location.href.split('?')[0].split('#')[0];
   $('qrurl').textContent=url;
-  var box=$('qrcode');box.innerHTML='';
-  if(typeof QRCode!=='undefined')new QRCode(box,{text:url,width:140,height:140,colorDark:'#1c1b19',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+  var box=$('qrcode'); box.innerHTML='';
+  if(typeof QRCode!=='undefined') new QRCode(box,{text:url,width:140,height:140,colorDark:'#1c1b19',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
 }
 function printQR(){
-  var qe=$('qrcode'),img=qe.querySelector('img')||qe.querySelector('canvas');
+  var qe=$('qrcode'), img=qe.querySelector('img')||qe.querySelector('canvas');
   var src=img?(img.tagName==='IMG'?img.src:img.toDataURL()):'';
-  var e=ST.event,w=window.open('','_blank','width=420,height=560');
+  var e=ST.event, w=window.open('','_blank','width=420,height=560');
   w.document.write('<!DOCTYPE html><html><body style="font-family:sans-serif;text-align:center;padding:48px 24px">'
     +'<p style="font-size:13px;color:#888;margin-bottom:12px">'+(e.org||'')+'</p>'
     +'<h2 style="font-size:20px;font-weight:700;margin-bottom:4px">'+(e.name||'행사 참가자 등록부')+'</h2>'
@@ -453,18 +525,19 @@ function printQR(){
     +'</body></html>');
 }
 function dlQR(){
-  var qe=$('qrcode'),c=qe.querySelector('canvas'),img=qe.querySelector('img'),a=document.createElement('a');
+  var qe=$('qrcode'), c=qe.querySelector('canvas'), img=qe.querySelector('img'), a=document.createElement('a');
   a.download='참석자_서명_QR.png';
-  if(c){a.href=c.toDataURL('image/png');a.click();}else if(img){a.href=img.src;a.click();}
+  if(c){ a.href=c.toDataURL('image/png'); a.click(); }
+  else if(img){ a.href=img.src; a.click(); }
 }
 
 function renderRoster(){
   var list=ST.people.slice();
-  if(ST.rf==='done')list=list.filter(function(p){return p.sig;});
-  if(ST.rf==='wait')list=list.filter(function(p){return!p.sig;});
-  if(ST.rs)list=list.filter(function(p){return (p.name||'').indexOf(ST.rs)!==-1||(p.org||'').indexOf(ST.rs)!==-1;});
+  if(ST.rf==='done') list=list.filter(function(p){return p.sig;});
+  if(ST.rf==='wait') list=list.filter(function(p){return !p.sig;});
+  if(ST.rs) list=list.filter(function(p){return (p.name||'').indexOf(ST.rs)!==-1||(p.org||'').indexOf(ST.rs)!==-1;});
   var tbody=$('rtbody');
-  if(!list.length){tbody.innerHTML='<tr><td colspan="8" class="nodata">참석자가 없습니다</td></tr>';return;}
+  if(!list.length){ tbody.innerHTML='<tr><td colspan="8" class="nodata">참석자가 없습니다</td></tr>'; return; }
   var html='';
   list.forEach(function(p){
     html+='<tr><td style="color:var(--g400)">'+p.no+'</td><td>'+(p.region||'')+'</td>'
@@ -474,32 +547,48 @@ function renderRoster(){
       +'<td><button class="dbtn" data-del="'+(p.no-1)+'">삭제</button></td></tr>';
   });
   tbody.innerHTML=html;
-  tbody.querySelectorAll('.dbtn').forEach(function(btn){btn.addEventListener('click',function(){delPerson(parseInt(btn.getAttribute('data-del')));});});
+  tbody.querySelectorAll('.dbtn').forEach(function(btn){
+    btn.addEventListener('click', function(){ delPerson(parseInt(btn.getAttribute('data-del'))); });
+  });
 }
-function delPerson(idx){if(!confirm(ST.people[idx].name+'을(를) 삭제할까요?'))return;ST.people.splice(idx,1);ST.people.forEach(function(p,i){p.no=i+1;});save();renderAdmin();}
-function resetSigs(){if(!confirm('모든 서명을 초기화할까요?'))return;ST.people.forEach(function(p){p.sig=null;p.sigTime=null;});save();renderAdmin();}
+function delPerson(idx){
+  if(!confirm(ST.people[idx].name+'을(를) 삭제할까요?'))return;
+  ST.people.splice(idx,1); ST.people.forEach(function(p,i){p.no=i+1;});
+  renderAdmin();
+}
+function resetSigs(){
+  if(!confirm('모든 서명을 초기화할까요?'))return;
+  ST.people.forEach(function(p){p.sig=null;p.sigTime=null;}); saveSigs(); renderAdmin();
+}
 
-function renderSettings(){$('s-ename').value=ST.event.name||'';$('s-edate').value=ST.event.date||'';$('s-org').value=ST.event.org||'';renderManualTbl();}
+// ── 설정 ──
+var mrows=[];
+function renderSettings(){
+  $('s-ename').value=ST.event.name||''; $('s-edate').value=ST.event.date||''; $('s-org').value=ST.event.org||'';
+  renderManualTbl();
+}
 function saveSettings(){
-  var name=$('s-ename').value.trim();if(!name){alert('행사명을 입력하세요.');return;}
-  ST.event.name=name;ST.event.date=$('s-edate').value;ST.event.org=$('s-org').value.trim();
-  var np=$('s-pw').value;if(np)ST.password=np;
-  save();renderAttHd();$('top-evname').textContent=ST.event.name;alert('저장되었습니다.');
+  var name=$('s-ename').value.trim(); if(!name){alert('행사명을 입력하세요.');return;}
+  ST.event.name=name; ST.event.date=$('s-edate').value; ST.event.org=$('s-org').value.trim();
+  var np=$('s-pw').value; if(np) ST.password=np;
+  saveAdminSettings(); renderAttHd(); $('top-evname').textContent=ST.event.name; alert('저장되었습니다.');
 }
 
+// ── 엑셀 가져오기 ──
 function importXL(file){
   $('ufname').textContent=file.name+' 처리 중...';
   var reader=new FileReader();
   reader.onload=function(ev){
     try{
-      var wb=XLSX.read(ev.target.result,{type:'array'}),ws=wb.Sheets[wb.SheetNames[0]];
-      var rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''}),start=(rows.length>0&&isNaN(rows[0][0]))?1:0;
-      var people=rows.slice(start).filter(function(r){return (r[2]||r[1]||'').toString().trim();})
+      var wb=XLSX.read(ev.target.result,{type:'array'}), ws=wb.Sheets[wb.SheetNames[0]];
+      var rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:''}), start=(rows.length>0&&isNaN(rows[0][0]))?1:0;
+      var people=rows.slice(start)
+        .filter(function(r){return (r[2]||r[1]||'').toString().trim();})
         .map(function(r,i){return{no:parseInt(r[0])||i+1,region:(r[1]||'').toString().trim(),name:(r[2]||'').toString().trim(),org:(r[3]||'').toString().trim(),pos:(r[4]||'').toString().trim(),sig:null,sigTime:null};})
         .filter(function(p){return p.name;});
       if(!people.length){alert('명단을 찾을 수 없습니다.');return;}
       if(!confirm(people.length+'명을 불러옵니다. 기존 명단이 교체됩니다. 계속할까요?'))return;
-      ST.people=people;save();renderAdmin();
+      ST.people=people; renderAdmin();
       $('ufname').textContent='✓ '+people.length+'명 불러오기 완료';
       $('uarea').style.borderColor='var(--green)';
     }catch(err){alert('파일 읽기 오류가 발생했습니다.');}
@@ -507,8 +596,9 @@ function importXL(file){
   reader.readAsArrayBuffer(file);
 }
 
+// ── 직접 입력 ──
 function renderManualTbl(){
-  if(!mrows.length)mrows=[{no:'',region:'',name:'',org:'',pos:''}];
+  if(!mrows.length) mrows=[{no:'',region:'',name:'',org:'',pos:''}];
   var html='';
   mrows.forEach(function(r,i){
     html+='<tr>'
@@ -519,61 +609,109 @@ function renderManualTbl(){
       +'<td><input type="text" class="m-pos" value="'+r.pos+'" placeholder="직위"></td>'
       +'<td><button class="dbtn" data-mrow="'+i+'">✕</button></td></tr>';
   });
-  var tb=$('mtbody');tb.innerHTML=html;
-  tb.querySelectorAll('.dbtn').forEach(function(btn){btn.addEventListener('click',function(){mrows.splice(parseInt(btn.getAttribute('data-mrow')),1);if(!mrows.length)mrows=[{no:'',region:'',name:'',org:'',pos:''}];renderManualTbl();});});
+  var tb=$('mtbody'); tb.innerHTML=html;
+  tb.querySelectorAll('.dbtn').forEach(function(btn){
+    btn.addEventListener('click',function(){ mrows.splice(parseInt(btn.getAttribute('data-mrow')),1); if(!mrows.length)mrows=[{no:'',region:'',name:'',org:'',pos:''}]; renderManualTbl(); });
+  });
 }
 function saveManual(){
-  var rows=document.querySelectorAll('#mtbody tr'),newP=[];
-  rows.forEach(function(tr){var name=tr.querySelector('.m-name').value.trim();if(!name)return;newP.push({no:parseInt(tr.querySelector('.m-no').value)||ST.people.length+newP.length+1,region:tr.querySelector('.m-reg').value.trim(),name:name,org:tr.querySelector('.m-org').value.trim(),pos:tr.querySelector('.m-pos').value.trim(),sig:null,sigTime:null});});
+  var rows=document.querySelectorAll('#mtbody tr'), newP=[];
+  rows.forEach(function(tr){
+    var name=tr.querySelector('.m-name').value.trim(); if(!name)return;
+    newP.push({no:parseInt(tr.querySelector('.m-no').value)||ST.people.length+newP.length+1,region:tr.querySelector('.m-reg').value.trim(),name:name,org:tr.querySelector('.m-org').value.trim(),pos:tr.querySelector('.m-pos').value.trim(),sig:null,sigTime:null});
+  });
   if(!newP.length){alert('이름을 최소 1명 입력하세요.');return;}
-  ST.people=ST.people.concat(newP);ST.people.forEach(function(p,i){p.no=i+1;});
-  save();renderAdmin();mrows=[{no:'',region:'',name:'',org:'',pos:''}];renderManualTbl();alert(newP.length+'명이 추가되었습니다.');
+  ST.people=ST.people.concat(newP); ST.people.forEach(function(p,i){p.no=i+1;});
+  renderAdmin(); mrows=[{no:'',region:'',name:'',org:'',pos:''}]; renderManualTbl(); alert(newP.length+'명이 추가되었습니다.');
 }
 
+// ── 배포용 HTML 생성 ──
+function deployHTML(){
+  if(!ST.people.length){alert('먼저 참석자 명단을 등록해 주세요.');aTab('settings');return;}
+  if(!ST.event.name){alert('먼저 행사명을 입력하고 저장해 주세요.');return;}
+
+  // 서명 제거한 명단 (배포용 - 서명은 행사당일 입력)
+  var cleanPeople=ST.people.map(function(p){return{no:p.no,region:p.region,name:p.name,org:p.org,pos:p.pos,sig:null,sigTime:null};});
+
+  // 현재 HTML 소스에 데이터 삽입
+  var src=document.documentElement.outerHTML;
+
+  // 플레이스홀더 치환
+  src=src.replace("'##PEOPLE##'", JSON.stringify(cleanPeople));
+  src=src.replace("'##EVENT##'",  JSON.stringify({name:ST.event.name,date:ST.event.date,org:ST.event.org,logo:''}));
+  src=src.replace("'##PW##'",  JSON.stringify(ST.password));
+
+  var blob=new Blob([src],{type:'text/html;charset=utf-8'});
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='index.html';
+  a.click();
+  URL.revokeObjectURL(a.href);
+
+  setTimeout(function(){
+    alert('✅ 배포용 index.html이 다운로드되었습니다.\n\nGitHub 저장소에 업로드하면\n참석자가 QR 스캔 후 바로 이름 검색이 가능합니다.');
+  },300);
+}
+
+// ── 인쇄 / 엑셀 ──
 function printList(){
-  var e=ST.event,signed=ST.people.filter(function(p){return p.sig;}).length;
+  var e=ST.event, signed=ST.people.filter(function(p){return p.sig;}).length;
   var rows=ST.people.map(function(p){return '<tr><td style="text-align:center">'+p.no+'</td><td>'+(p.region||'')+'</td><td style="font-weight:600">'+p.name+'</td><td>'+(p.org||'')+'</td><td>'+(p.pos||'')+'</td><td style="text-align:center">'+(p.sig?'<img src="'+p.sig+'" style="max-height:36px">':'')+'</td></tr>';}).join('');
   var pt=$('ptarget');
   pt.innerHTML='<div class="ph"><h1>'+(e.name||'참가자 등록부')+'</h1><p>'+(e.date?fmtDate(e.date):'')+(e.org?' · '+e.org:'')+' · 전체 '+ST.people.length+'명 / 서명완료 '+signed+'명</p></div><table class="ptable"><thead><tr>'+['연번','지역','이름','소속','직위','서명'].map(function(h){return'<th>'+h+'</th>';}).join('')+'</tr></thead><tbody>'+rows+'</tbody></table>';
-  pt.style.display='block';window.print();setTimeout(function(){pt.style.display='none';},500);
+  pt.style.display='block'; window.print(); setTimeout(function(){pt.style.display='none';},500);
 }
-
 function dlExcel(){
-  var wb=XLSX.utils.book_new(),data=[['연번','지역','이름','소속','직위','서명여부','서명시각']];
+  var wb=XLSX.utils.book_new(), data=[['연번','지역','이름','소속','직위','서명여부','서명시각']];
   ST.people.forEach(function(p){data.push([p.no,p.region||'',p.name,p.org||'',p.pos||'',p.sig?'서명완료':'미서명',p.sigTime||'']);});
-  var ws=XLSX.utils.aoa_to_sheet(data);ws['!cols']=[{wch:6},{wch:8},{wch:10},{wch:28},{wch:10},{wch:10},{wch:22}];
-  XLSX.utils.book_append_sheet(wb,ws,'참가자명단');XLSX.writeFile(wb,(ST.event.name||'참가자명단').replace(/\s/g,'_')+'_명단.xlsx');
+  var ws=XLSX.utils.aoa_to_sheet(data); ws['!cols']=[{wch:6},{wch:8},{wch:10},{wch:28},{wch:10},{wch:10},{wch:22}];
+  XLSX.utils.book_append_sheet(wb,ws,'참가자명단');
+  XLSX.writeFile(wb,(ST.event.name||'참가자명단').replace(/\s/g,'_')+'_명단.xlsx');
 }
 
-// 이벤트 등록
-document.addEventListener('DOMContentLoaded',function(){
-  load();renderAttHd();
-  $('att-si').addEventListener('input',function(){attSearch(this.value);});
-  $('btn-back').addEventListener('click',attBack);
-  $('btn-clr').addEventListener('click',clearSig);
-  $('btn-sav').addEventListener('click',saveSig);
-  $('btn-next').addEventListener('click',attBack);
-  $('btn-to-admin').addEventListener('click',goLogin);
-  $('btn-login').addEventListener('click',doLogin);
-  $('btn-login-back').addEventListener('click',goAtt);
-  $('pw-input').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
-  $('btn-a-att').addEventListener('click',goAtt);
-  $('btn-logout').addEventListener('click',goLogin);
-  document.querySelectorAll('.atab').forEach(function(btn){btn.addEventListener('click',function(){aTab(btn.getAttribute('data-tab'));});});
-  $('btn-pqr').addEventListener('click',printQR);
-  $('btn-dqr').addEventListener('click',dlQR);
-  $('btn-plist').addEventListener('click',printList);
-  $('btn-dxl').addEventListener('click',dlExcel);
-  $('btn-rst').addEventListener('click',resetSigs);
-  $('rsearch').addEventListener('input',function(){ST.rs=this.value;renderRoster();});
-  document.querySelectorAll('[data-rf]').forEach(function(btn){btn.addEventListener('click',function(){ST.rf=btn.getAttribute('data-rf');document.querySelectorAll('[data-rf]').forEach(function(b){b.classList.remove('on');});btn.classList.add('on');renderRoster();});});
-  $('btn-ssave').addEventListener('click',saveSettings);
-  $('uarea').addEventListener('click',function(){$('xlsin').click();});
-  $('xlsin').addEventListener('change',function(){if(this.files[0])importXL(this.files[0]);this.value='';});
-  $('btn-madd').addEventListener('click',function(){mrows.push({no:'',region:'',name:'',org:'',pos:''});renderManualTbl();});
-  $('btn-msave').addEventListener('click',saveManual);
-  $('btn-mclr').addEventListener('click',function(){mrows=[{no:'',region:'',name:'',org:'',pos:''}];renderManualTbl();});
+// ── DOMContentLoaded ──
+document.addEventListener('DOMContentLoaded', function(){
+  loadAdminSettings();
+  loadSigs();
+  renderAttHd();
+  initCanvas();
+
+  $('att-si').addEventListener('input', function(){ attSearch(this.value); });
+  $('btn-back').addEventListener('click', attBack);
+  $('btn-clr').addEventListener('click', clearSig);
+  $('btn-sav').addEventListener('click', saveSig);
+  $('btn-next').addEventListener('click', attBack);
+  $('btn-to-admin').addEventListener('click', goLogin);
+  $('btn-login').addEventListener('click', doLogin);
+  $('btn-login-back').addEventListener('click', goAtt);
+  $('pw-input').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+  $('btn-a-att').addEventListener('click', goAtt);
+  $('btn-logout').addEventListener('click', goLogin);
+
+  document.querySelectorAll('.atab').forEach(function(btn){
+    btn.addEventListener('click', function(){ aTab(btn.getAttribute('data-tab')); });
+  });
+
+  $('btn-pqr').addEventListener('click', printQR);
+  $('btn-dqr').addEventListener('click', dlQR);
+  $('btn-plist').addEventListener('click', printList);
+  $('btn-dxl').addEventListener('click', dlExcel);
+  $('btn-rst').addEventListener('click', resetSigs);
+  $('btn-deploy').addEventListener('click', deployHTML);
+
+  $('rsearch').addEventListener('input', function(){ ST.rs=this.value; renderRoster(); });
+  document.querySelectorAll('[data-rf]').forEach(function(btn){
+    btn.addEventListener('click', function(){ ST.rf=btn.getAttribute('data-rf'); document.querySelectorAll('[data-rf]').forEach(function(b){b.classList.remove('on');}); btn.classList.add('on'); renderRoster(); });
+  });
+
+  $('btn-ssave').addEventListener('click', saveSettings);
+  $('uarea').addEventListener('click', function(){ $('xlsin').click(); });
+  $('xlsin').addEventListener('change', function(){ if(this.files[0]) importXL(this.files[0]); this.value=''; });
+  $('btn-madd').addEventListener('click', function(){ mrows.push({no:'',region:'',name:'',org:'',pos:''}); renderManualTbl(); });
+  $('btn-msave').addEventListener('click', saveManual);
+  $('btn-mclr').addEventListener('click', function(){ mrows=[{no:'',region:'',name:'',org:'',pos:''}]; renderManualTbl(); });
 });
+
 })();
 </script>
 </body>
